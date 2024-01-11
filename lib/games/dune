@@ -1,0 +1,5 @@
+(library
+ (name games)
+ (public_name camlcards.games)
+ (modules war)
+ (libraries camlcards))

@@ -1,0 +1,4 @@
+(executable
+ (public_name camlcards)
+ (name main)
+ (libraries camlcards camlcards.games uutf))

@@ -1,0 +1,13 @@
+(library
+ (name camlcards)
+ (public_name camlcards)
+ (modules
+  card
+  hand
+  deck
+  game_setup
+  play
+  settings
+  list_utils
+  string_utils
+  logging))
