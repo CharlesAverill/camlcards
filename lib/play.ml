@@ -26,12 +26,17 @@ let wait_error msg = print_endline msg ; wait ()
 
 let find_player_with_idx players idx = List.find (fun (i, _) -> idx = i) players
 
-let rec select_player players prompt =
-  print_players players ;
+let rec choose selections prompt =
+  List.iteri (Printf.printf "[%d] - %s\n") selections ;
   print_string (prompt ^ ": ") ;
-  try
-    let idx = read_int () in
-    find_player_with_idx players idx
+  try read_int ()
+  with Failure _ ->
+    wait_error "Please input a valid integer choice" ;
+    choose selections prompt
+
+let rec select_player players prompt =
+  let idx = choose (List.map snd players) prompt in
+  try find_player_with_idx players idx
   with Failure _ ->
     wait_error "Couldn't find that player, please input a valid player number" ;
     select_player players prompt
@@ -56,10 +61,8 @@ let distribute_cards players (deck : deck) : start_hand -> player list =
   | DistributeDeck ->
       let deck = partition (shuffle deck) (List.length players) in
       List.map (fun ((i, n), d) -> (i, n, d)) (List.combine players deck)
-
-let player_name = function _, n, _ -> n
-
-let player_id = function i, _, _ -> i
+  | None ->
+      List.map (fun (i, n) -> (i, n, [])) players
 
 let play_game setup =
   let deck = gen_deck setup.deck_type in
@@ -71,9 +74,10 @@ let play_game setup =
   let players = name_players setup.players in
   (* Set player order *)
   let players = order_players players setup.order in
-  print_bar () ;
-  print_endline "Player Order" ;
-  print_bar () ;
+  if setup.players > 1 then (
+    print_bar () ;
+    print_endline "Player Order" ;
+    print_bar () ) ;
   print_players players ;
   print_bar () ;
   wait () ;
@@ -83,5 +87,6 @@ let play_game setup =
   let players = distribute_cards players deck setup.start_hand in
   let winner = setup.game_loop (List.hd players) players in
   print_bar () ;
-  print_endline (player_name winner ^ " wins!") ;
+  if setup.players = 1 then print_endline "Game over"
+  else print_endline (player_name winner ^ " wins!") ;
   print_bar ()

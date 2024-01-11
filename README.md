@@ -15,9 +15,11 @@ a standard interface for game loops and player interactions.
 ## Example
 
 Arguably the simplest card game, [War](https://en.wikipedia.org/wiki/War_(card_game))
-is provided as an example [here](lib/games/war.ml).
+is provided as an example [here](lib/games/war.ml). Additionally, [here](lib/games/blackjack.ml)
+is a simple version of blackjack - players can only hit or stand, and Aces are 
+always 11.
 
-Here's an example playout:
+Here's an example playout of War:
 ```
 ==================================================
 Let's play War!

@@ -1,6 +1,6 @@
 (* open Camlcards.Card
    open Camlcards.Settings *)
 open Camlcards.Play
-open Games.War
+open Games.Blackjack
 
-let _ = play_game war_setup
+let _ = play_game blackjack_setup

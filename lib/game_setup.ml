@@ -8,9 +8,15 @@ type turn_order =
 
 type play_area = Stack of card list
 
-type start_hand = DistributeDeck
+type start_hand = DistributeDeck | None
 
 type player = int * string * hand
+
+let player_name = function _, n, _ -> n
+
+let player_id = function i, _, _ -> i
+
+let player_hand = function _, _, h -> h
 
 type win_condition =
      (* Current player -> All players -> Play Area -> Current Player Wins? *)

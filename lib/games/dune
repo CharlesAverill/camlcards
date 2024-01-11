@@ -1,5 +1,5 @@
 (library
  (name games)
  (public_name camlcards.games)
- (modules war)
+ (modules war blackjack)
  (libraries camlcards))

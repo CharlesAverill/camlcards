@@ -1,6 +1,5 @@
 open Camlcards.Game_setup
 open Camlcards.Card
-open Camlcards.Play
 
 let win_condition (player : player) (players : player list) _ =
   let nonzero = List.find_all (fun (_, _, h) -> List.length h <> 0) players in

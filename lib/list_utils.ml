@@ -35,3 +35,20 @@ let partition lst n =
         aux rest (current :: acc)
   in
   aux lst []
+
+let sublist l n =
+  let rec aux l i =
+    match l with [] -> [] | h :: t -> if i = n then [] else h :: aux t (i + 1)
+  in
+  aux l 0
+
+let split_at_n lst n =
+  let rec aux l i acc1 acc2 =
+    match l with
+    | [] ->
+        (List.rev acc1, List.rev acc2)
+    | h :: t ->
+        if i < n then aux t (i + 1) (h :: acc1) acc2
+        else aux t (i + 1) acc1 (h :: acc2)
+  in
+  aux lst 0 [] []
