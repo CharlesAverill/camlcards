@@ -34,8 +34,8 @@ let index_of item lst =
   aux 0 lst
 
 let next_player player players =
-  let i = index_of player players in
-  List.nth players ((i + 1) mod List.length players)
+  List.nth players
+    (match index_of player players with 0 -> 1 | 1 -> 0 | _ -> 0)
 
 let update_player (player : player) (players : player list) =
   List.map
@@ -50,8 +50,9 @@ let rec game_loop (player : player) (players : player list) =
         turn := !turn + 1 ;
         let winner =
           player_gets_cards
-            ( if card_value c1 >= card_value c2 then List.nth players 0
-              else List.nth players 1 )
+            (List.nth
+               (if !turn mod 2 <> 0 then players else List.rev players)
+               ((if card_value c1 >= card_value c2 then 0 else 1) mod 2) )
             [c2; c1]
         in
         ( match winner with
